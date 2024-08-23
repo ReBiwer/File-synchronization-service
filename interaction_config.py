@@ -2,7 +2,9 @@ import configparser
 
 
 def _get_ConfigParser() -> configparser.ConfigParser:
-    return configparser.ConfigParser()
+    config = configparser.ConfigParser()
+    _read_config_file(config)
+    return config
 
 
 def _read_config_file(parser: configparser.ConfigParser) -> None:
@@ -11,6 +13,9 @@ def _read_config_file(parser: configparser.ConfigParser) -> None:
 
 def get_keyOAuth() -> str:
     config = _get_ConfigParser()
-    _read_config_file(config)
     return config.get("API", 'kay_OAuth')
 
+
+def get_name_log_file() -> str:
+    config = _get_ConfigParser()
+    return config.get('logger', 'name_log_file')
