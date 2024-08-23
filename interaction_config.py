@@ -13,7 +13,7 @@ def _read_config_file(parser: configparser.ConfigParser) -> None:
 
 def get_keyOAuth() -> str:
     config = _get_ConfigParser()
-    return config.get("API", 'kay_OAuth')
+    return config.get("API", 'key_OAuth')
 
 
 def get_name_log_file() -> str:
