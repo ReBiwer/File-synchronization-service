@@ -18,16 +18,6 @@ class Config:
         self.__config.read(self.name_conf_file)
 
     @property
-    def __config(self) -> configparser.ConfigParser:
-        """Возвращает парсер с прочитанным файлом self.name_conf_file"""
-        return self.__config
-
-    @__config.setter
-    def __config(self, config: configparser.ConfigParser) -> None:
-        """Задает новый парсер"""
-        self.__config = config
-
-    @property
     def token_API_cloud(self) -> str:
         """Возвращает токен доступа к облачному сервису"""
         return self.__config.get('API', 'token_API_cloud')
