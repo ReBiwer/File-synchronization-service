@@ -29,3 +29,8 @@ def get_name_cloud_dir() -> str:
 def get_name_local_dir() -> str:
     config = _get_ConfigParser()
     return config.get('dirs', 'name_local_dir')
+
+
+def get_time_synchronization() -> int:
+    config = _get_ConfigParser()
+    return int(config.get('time_synchronization', 'time_sec'))
