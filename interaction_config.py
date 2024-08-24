@@ -1,43 +1,53 @@
 import configparser
 
 
-def _get_ConfigParser() -> configparser.ConfigParser:
-    """Возращает парсер с прочитанным конфиг файлом"""
-    config = configparser.ConfigParser()
-    _read_config_file(config)
-    return config
+class Config:
+    """
+    Класс для работы с данными из config.ini
+    Для работы с данными, необходимо создать экземпляр класса
+    """
+    name_conf_file = 'config.ini'
 
+    def __init__(self):
+        """При создании экземпляра класса, создает парсер и читает файл"""
+        self.__read_config_file()
 
-def _read_config_file(parser: configparser.ConfigParser) -> None:
-    """Читает конфиг файл в переданном парсере"""
-    parser.read('config.ini')
+    def __read_config_file(self) -> None:
+        """Создает парсер и читает файл self.name_conf_file"""
+        self.__config = configparser.ConfigParser()
+        self.__config.read(self.name_conf_file)
 
+    @property
+    def __config(self) -> configparser.ConfigParser:
+        """Возвращает парсер с прочитанным файлом self.name_conf_file"""
+        return self.__config
 
-def get_keyOAuth() -> str:
-    """Возвращает ключ доступа к диску"""
-    config = _get_ConfigParser()
-    return config.get("API", 'key_OAuth')
+    @__config.setter
+    def __config(self, config: configparser.ConfigParser) -> None:
+        """Задает новый парсер"""
+        self.__config = config
 
+    @property
+    def token_API_cloud(self) -> str:
+        """Возвращает токен доступа к облачному сервису"""
+        return self.__config.get('API', 'token_API_cloud')
 
-def get_name_log_file() -> str:
-    """Возвращает имя лог файла"""
-    config = _get_ConfigParser()
-    return config.get('logger', 'name_log_file')
+    @property
+    def name_log_file(self) -> str:
+        """Возвращает название лог файла"""
+        return self.__config.get('logger', 'name_log_file')
 
+    @property
+    def cloud_dir(self) -> str:
+        """Возвращает название папки в облаке"""
+        return self.__config.get('dirs', 'name_cloud_dir')
 
-def get_name_cloud_dir() -> str:
-    """Возвращает название папки в облаке"""
-    config = _get_ConfigParser()
-    return config.get('dirs', 'name_cloud_dir')
+    @property
+    def local_dir(self) -> str:
+        """Возвращает путь к локальной директории"""
+        return self.__config.get('dirs', 'path_local_dir')
 
-
-def get_path_local_dir() -> str:
-    """Возвращает путь к локальной папке"""
-    config = _get_ConfigParser()
-    return config.get('dirs', 'path_local_dir')
-
-
-def get_time_synchronization() -> int:
-    """Возвращает период синхронизации (в секундах)"""
-    config = _get_ConfigParser()
-    return int(config.get('time_synchronization', 'time_sec'))
+    @property
+    def time_synchronization(self) -> int:
+        """Возвращает периодичность синхронизации"""
+        return int(self.__config.get('time_synchronization', 'time_sec'))
