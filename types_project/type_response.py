@@ -1,4 +1,18 @@
 from typing import TypedDict, Optional
+from enum import Enum
+
+
+class ResponseStatus(str, Enum):
+    HTTP_200 = 200
+    HTTP_400 = 400
+    HTTP_401 = 401
+    HTTP_403 = 403
+    HTTP_404 = 404
+    HTTP_406 = 406
+    HTTP_413 = 413
+    HTTP_423 = 423
+    HTTP_429 = 429
+    HTTP_503 = 503
 
 
 class SystemFolders(TypedDict):
@@ -43,4 +57,4 @@ class ResponseMetaDataYandexDisk(TypedDict):
     is_idm_managed_public_access: Optional[bool]  # Признак управления адресным доступом публичным доступом для файлов
     payment_flow: Optional[bool]  # Признак причастности пользователя для payment_flow
     unlimited_autoupload_enabled: Optional[bool]  # Признак включенной безлимитной автозагрузки с мобильных устройств
-    revision: int  # Текущая ревизия Диска
+    revision: Optional[int]  # Текущая ревизия Диска
