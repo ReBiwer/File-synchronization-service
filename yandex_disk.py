@@ -2,7 +2,7 @@ import requests
 import json
 
 from types_project.type_response import ResponseMetaDataYandexDisk
-from interaction_config import Config
+from config.interaction_config import Config
 
 
 class CloudDisk:
