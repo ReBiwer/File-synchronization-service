@@ -6,7 +6,7 @@ from settings_project.config.interaction_config import Config
 
 
 class CloudDir:
-    """Класс для взаимодействия с облачным диском"""
+    """Класс для взаимодействия с директорией в облаке"""
     __base_url_request = 'https://cloud-api.yandex.net/v1/disk/'
 
     def __init__(self):
