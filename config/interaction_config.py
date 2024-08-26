@@ -1,5 +1,6 @@
 import configparser
 import os
+from pathlib import Path
 
 
 class Config:
@@ -10,16 +11,17 @@ class Config:
 
     def __init__(self):
         """При создании экземпляра класса, создает парсер и читает файл"""
-        self.__read_config_file()
         self.path_to_conf_file = self.__get_path_conf_file()
+        self.__read_config_file()
 
     @staticmethod
     def __get_path_conf_file() -> str:
-        """Метод возвращает абсолютный путь к файлу с конфигом, относительно директории проекта"""
-        dir_project = 'File-synchronization-service'
+        """Метод возвращает абсолютный путь к файлу с конфигом, относительно директории PycharmProjects и проекта"""
+        dir_project = os.path.join('PycharmProjects', 'File-synchronization-service')
+        root_path = Path().cwd().home()
         path_config_file = os.path.abspath(
             os.path.join(
-                dir_project, 'config', 'config.ini'
+                root_path, dir_project, 'config', 'config.ini'
             )
         )
         return path_config_file
@@ -53,3 +55,13 @@ class Config:
     def time_synchronization(self) -> int:
         """Возвращает периодичность синхронизации"""
         return int(self.__config.get('time_synchronization', 'time_sec'))
+
+
+home_path = Path().cwd().root
+abs_path = os.path.abspath(
+    os.path.join(
+        home_path, 'File-synchronization-service', 'config', 'config.ini'
+    )
+)
+print(abs_path)
+print(os.path.isdir(home_path))
