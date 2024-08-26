@@ -6,7 +6,7 @@ class Config:
     Класс для работы с данными из config.ini
     Для работы с данными, необходимо создать экземпляр класса
     """
-    name_conf_file = 'config.ini'
+    path_to_conf_file = 'config/config.ini'
 
     def __init__(self):
         """При создании экземпляра класса, создает парсер и читает файл"""
@@ -15,7 +15,7 @@ class Config:
     def __read_config_file(self) -> None:
         """Создает парсер и читает файл self.name_conf_file"""
         self.__config = configparser.ConfigParser()
-        self.__config.read(self.name_conf_file)
+        self.__config.read(self.path_to_conf_file)
 
     @property
     def token_API_cloud(self) -> str:
