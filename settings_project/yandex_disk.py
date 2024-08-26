@@ -1,8 +1,8 @@
 import requests
 import json
 
-from types_project.type_response import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
-from config.interaction_config import Config
+from settings_project.types_project.type_response import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
+from settings_project.config.interaction_config import Config
 
 
 class CloudDisk:
@@ -56,3 +56,5 @@ class CloudDisk:
             headers=self.__header,
         )
         return json.loads(response.content)
+
+

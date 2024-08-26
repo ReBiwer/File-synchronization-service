@@ -18,10 +18,10 @@ class Config:
     def __get_path_conf_file() -> str:
         """Метод возвращает абсолютный путь к файлу с конфигом, относительно директории PycharmProjects и проекта"""
         dir_project = os.path.join('PycharmProjects', 'File-synchronization-service')
-        root_path = Path().cwd().home()
+        path_home = Path().cwd().home()
         path_config_file = os.path.abspath(
             os.path.join(
-                root_path, dir_project, 'config', 'config.ini'
+                path_home, dir_project, 'settings_project', 'config', 'config.ini'
             )
         )
         return path_config_file

@@ -1,6 +1,6 @@
 import unittest
-from types_project.type_response import ResponseStatus
-from yandex_disk import CloudDisk
+from settings_project.types_project.type_response import ResponseStatus
+from settings_project.yandex_disk import CloudDisk
 
 
 class TestCloudDisk(unittest.TestCase):

@@ -1,12 +1,17 @@
 import logging.config
-
 import os
+from pathlib import Path
 
 
 def _get_path_to_log() -> str:
-    return os.path.join(
-        os.getcwd(), 'test_log_file'
+    dir_project = os.path.join('PycharmProjects', 'File-synchronization-service')
+    path_home = Path().cwd().home()
+    path_log_file = os.path.abspath(
+        os.path.join(
+            path_home, dir_project, 'settings_project', 'logging_project', 'test_log_file'
+        )
     )
+    return path_log_file
 
 
 def _get_dict_config() -> dict:
