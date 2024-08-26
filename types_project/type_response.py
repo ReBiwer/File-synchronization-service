@@ -2,7 +2,7 @@ from typing import TypedDict, Optional
 from enum import Enum
 
 
-class ResponseStatus(str, Enum):
+class ResponseStatus(int, Enum):
     HTTP_200 = 200
     HTTP_400 = 400
     HTTP_401 = 401
