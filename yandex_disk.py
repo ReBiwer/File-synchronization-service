@@ -11,11 +11,20 @@ class CloudDisk:
 
     def __init__(self):
         self.__config = Config()
+        self.__header = {'Authorization': self.__config.token_API_cloud}
 
-    def get_meta_info_cloud_dir(self) -> ResponseMetaDataYandexDisk:
-        """Метод возвращает информацию о мета информации с диска"""
+    def get_info_cloud_disk(self) -> ResponseMetaDataYandexDisk:
+        """Метод возвращает информацию об диске"""
         response = requests.get(
             self.__base_url_request,
-            headers={'Authorization': self.__config.token_API_cloud}
+            headers=self.__header,
+        )
+        return json.loads(response.content)
+
+    def get_info_cloud_dir(self) -> dict:
+        """Метод возвращает информацию о папке в облаке"""
+        response = requests.get(
+            self.__base_url_request + 'resources/?' + f'path={self.__config.cloud_dir}',
+            headers=self.__header,
         )
         return json.loads(response.content)
