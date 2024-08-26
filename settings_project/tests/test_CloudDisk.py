@@ -1,12 +1,12 @@
 import unittest
 from settings_project.types_project.type_response import ResponseStatus
-from settings_project.disks.cloud_disk import CloudDisk
+from settings_project.working_directories.cloud_dir import CloudDir
 
 
 class TestCloudDisk(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.testedCloudDisk = CloudDisk()
+        cls.testedCloudDisk = CloudDir()
         cls.HTTP_code_200 = ResponseStatus(200)
 
     def test_get_info_cloud_disk(self):

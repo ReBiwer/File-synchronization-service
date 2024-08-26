@@ -5,7 +5,7 @@ from settings_project.types_project.type_response import ResponseMetaDataYandexD
 from settings_project.config.interaction_config import Config
 
 
-class CloudDisk:
+class CloudDir:
     """Класс для взаимодействия с облачным диском"""
     __base_url_request = 'https://cloud-api.yandex.net/v1/disk/'
 
