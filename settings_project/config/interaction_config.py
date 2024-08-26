@@ -55,13 +55,3 @@ class Config:
     def time_synchronization(self) -> int:
         """Возвращает периодичность синхронизации"""
         return int(self.__config.get('time_synchronization', 'time_sec'))
-
-
-home_path = Path().cwd().root
-abs_path = os.path.abspath(
-    os.path.join(
-        home_path, 'File-synchronization-service', 'config', 'config.ini'
-    )
-)
-print(abs_path)
-print(os.path.isdir(home_path))
