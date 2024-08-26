@@ -1,1 +1,2 @@
-from . import config, logging_project, tests, types_project, cloud_disk
+from . import config, logging_project, tests, types_project
+from .disks import cloud_disk

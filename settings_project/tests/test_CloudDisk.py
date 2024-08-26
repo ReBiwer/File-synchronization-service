@@ -1,6 +1,6 @@
 import unittest
 from settings_project.types_project.type_response import ResponseStatus
-from settings_project.cloud_disk import CloudDisk
+from settings_project.disks.cloud_disk import CloudDisk
 
 
 class TestCloudDisk(unittest.TestCase):
