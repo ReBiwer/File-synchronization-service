@@ -1,4 +1,5 @@
 import configparser
+import os
 
 
 class Config:
@@ -6,11 +7,22 @@ class Config:
     Класс для работы с данными из config.ini
     Для работы с данными, необходимо создать экземпляр класса
     """
-    path_to_conf_file = 'config/config.ini'
 
     def __init__(self):
         """При создании экземпляра класса, создает парсер и читает файл"""
         self.__read_config_file()
+        self.path_to_conf_file = self.__get_path_conf_file()
+
+    @staticmethod
+    def __get_path_conf_file() -> str:
+        """Метод возвращает абсолютный путь к файлу с конфигом, относительно директории проекта"""
+        dir_project = 'File-synchronization-service'
+        path_config_file = os.path.abspath(
+            os.path.join(
+                dir_project, 'config', 'config.ini'
+            )
+        )
+        return path_config_file
 
     def __read_config_file(self) -> None:
         """Создает парсер и читает файл self.name_conf_file"""
