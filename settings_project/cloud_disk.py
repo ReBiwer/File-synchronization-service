@@ -56,5 +56,3 @@ class CloudDisk:
             headers=self.__header,
         )
         return json.loads(response.content)
-
-
