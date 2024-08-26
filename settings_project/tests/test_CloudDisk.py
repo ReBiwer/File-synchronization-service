@@ -1,6 +1,6 @@
 import unittest
 from settings_project.types_project.type_response import ResponseStatus
-from settings_project.yandex_disk import CloudDisk
+from settings_project.cloud_disk import CloudDisk
 
 
 class TestCloudDisk(unittest.TestCase):
@@ -12,4 +12,3 @@ class TestCloudDisk(unittest.TestCase):
     def test_get_info_cloud_disk(self):
         _, res_code_status = self.testedCloudDisk.get_info_cloud_disk()
         self.assertEqual(res_code_status, self.HTTP_code_200)
-
