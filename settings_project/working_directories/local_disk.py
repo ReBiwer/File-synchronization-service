@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 from settings_project.types_project.type_data_dir import InfoFile
 from datetime import datetime
 from settings_project.config.interaction_config import Config
