@@ -1,7 +1,7 @@
 import requests
 import json
 from pprint import pprint
-from settings_project.types_project.type_info_cloud_disk import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
+from settings_project.types_project.type_info_yandex_disk import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
 from settings_project.config.interaction_config import Config
 
 
