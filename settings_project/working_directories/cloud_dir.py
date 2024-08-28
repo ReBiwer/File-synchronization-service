@@ -9,9 +9,9 @@ class CloudDir:
     """Класс для взаимодействия с директорией в облаке"""
     __base_url_request = 'https://cloud-api.yandex.net/v1/disk/'
 
-    def __init__(self):
-        self.__config = Config()
-        self.__header = {'Authorization': self.__config.token_API_cloud}
+    def __init__(self, API_KEY: str, cloud_dir: str):
+        self.__header = {'Authorization': API_KEY}
+        self.__cloud_dir = cloud_dir
 
     def get_info_cloud_disk(self) -> tuple[dict, int]:
         """Метод возвращает информацию об диске"""
@@ -26,7 +26,7 @@ class CloudDir:
     def __get_items_in_cloud_dir(self) -> dict:
         """Метод возвращает список содержимого в облачной папке"""
         response = requests.get(
-            self.__base_url_request + 'resources/?' + f'path={self.__config.cloud_dir}',
+            self.__base_url_request + 'resources/?' + f'path={self.__cloud_dir}',
             headers=self.__header,
         )
         res = json.loads(response.content)['_embedded']['items']
@@ -34,4 +34,6 @@ class CloudDir:
 
 
 if __name__ == '__main__':
-    pprint(CloudDir().get_info_cloud_disk())
+    conf = Config()
+    key, cloud_dir = conf.token_API_cloud, conf.cloud_dir
+    pprint(CloudDir(key, cloud_dir).get_info_cloud_disk())
