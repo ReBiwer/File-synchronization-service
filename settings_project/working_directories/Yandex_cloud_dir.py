@@ -1,11 +1,11 @@
 import requests
 import json
-
+from pprint import pprint
 from settings_project.types_project.type_response import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
 from settings_project.config.interaction_config import Config
 
 
-class CloudDir:
+class YandexCloudDir:
     """Класс для взаимодействия с директорией в облаке"""
     __base_url_request = 'https://cloud-api.yandex.net/v1/disk/'
 
@@ -49,10 +49,15 @@ class CloudDir:
         type_info = self.__typing_info_cloud_disk(json.loads(response.content))
         return type_info, type_status_code
 
-    def get_info_cloud_dir(self) -> dict:
-        """Метод возвращает информацию о папке в облаке"""
+    def __get_items_in_cloud_dir(self) -> dict:
+        """Метод возвращает список содержимого в облачной папке"""
         response = requests.get(
             self.__base_url_request + 'resources/?' + f'path={self.__config.cloud_dir}',
             headers=self.__header,
         )
-        return json.loads(response.content)
+        res = json.loads(response.content)['_embedded']['items']
+        return res
+
+
+if __name__ == '__main__':
+    pprint(YandexCloudDir())
