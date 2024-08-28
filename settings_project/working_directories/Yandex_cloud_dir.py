@@ -1,7 +1,7 @@
 import requests
 import json
 from pprint import pprint
-from settings_project.types_project.type_response import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
+from settings_project.types_project.type_info_cloud_disk import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
 from settings_project.config.interaction_config import Config
 
 
@@ -60,4 +60,4 @@ class YandexCloudDir:
 
 
 if __name__ == '__main__':
-    pprint(YandexCloudDir())
+    pprint(YandexCloudDir().get_info_cloud_disk())

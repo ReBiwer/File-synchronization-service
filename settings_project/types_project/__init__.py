@@ -1,1 +1,1 @@
-from . import type_response, type_data_dir
+from . import type_info_cloud_disk, type_data_dir

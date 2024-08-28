@@ -1,5 +1,5 @@
 import unittest
-from settings_project.types_project.type_response import ResponseStatus
+from settings_project.types_project.type_info_cloud_disk import ResponseStatus
 from settings_project.working_directories.Yandex_cloud_dir import YandexCloudDir
 
 
