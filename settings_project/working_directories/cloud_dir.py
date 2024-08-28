@@ -1,7 +1,8 @@
-import requests
 import json
+import requests
+from datetime import datetime
 from pprint import pprint
-from settings_project.types_project.type_info_yandex_disk import ResponseMetaDataYandexDisk, ResponseStatus, User, SystemFolders
+from settings_project.types_project.type_info_file import InfoFile
 from settings_project.config.interaction_config import Config
 
 
@@ -23,7 +24,7 @@ class CloudDir:
         type_info = json.loads(response.content)
         return type_info, type_status_code
 
-    def __get_items_in_cloud_dir(self) -> dict:
+    def __get_items_in_cloud_dir(self) -> list:
         """Метод возвращает список содержимого в облачной папке"""
         response = requests.get(
             self.__base_url_request + 'resources/?' + f'path={self.__cloud_dir}',
@@ -32,8 +33,22 @@ class CloudDir:
         res = json.loads(response.content)['_embedded']['items']
         return res
 
+    @staticmethod
+    def __serializer_info_file(info_with_dict: dict) -> InfoFile:
+        name_file = info_with_dict['name']
+        created_time = datetime.strptime(info_with_dict['created'], "%Y-%m-%dT%H:%M:%S%z")
+        modified_time = datetime.strptime(info_with_dict['modified'], "%Y-%m-%dT%H:%M:%S%z")
+        return InfoFile(name_file=name_file, created_time=created_time, modified_time=modified_time)
+
+    def get_info_dir(self) -> list[InfoFile]:
+        info_about_files = list()
+        for file in self.__get_items_in_cloud_dir():
+            info_file = self.__serializer_info_file(file)
+            info_about_files.append(info_file)
+        return info_about_files
+
 
 if __name__ == '__main__':
     conf = Config()
     key, cloud_dir = conf.token_API_cloud, conf.cloud_dir
-    pprint(CloudDir(key, cloud_dir).get_info_cloud_disk())
+    pprint(CloudDir(key, cloud_dir).get_info_dir())
