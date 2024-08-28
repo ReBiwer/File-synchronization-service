@@ -6,9 +6,8 @@ from settings_project.config.interaction_config import Config
 
 class LocalDir:
     """Класс для взаимодействия с локальной директорией"""
-    def __init__(self):
-        self.__config = Config()
-        self.__path_local_dir = self.__config.local_dir
+    def __init__(self, path_local_dir: str):
+        self.__path_local_dir = path_local_dir
 
     @staticmethod
     def __get_time_created(path_file: str) -> datetime:
@@ -59,5 +58,7 @@ class LocalDir:
 
 
 if __name__ == '__main__':
-    for i in LocalDir().get_info_dir():
+    conf = Config()
+    path_dir = conf.local_dir
+    for i in LocalDir(path_dir).get_info_dir():
         print(i)
