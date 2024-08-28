@@ -36,8 +36,9 @@ class LocalDir:
         :param path_file: путь к файлу (str)
         :return InfoFile: информация о файле (InfoFile)
         """
+        name_file = os.path.basename(path_file)
         info = InfoFile(
-            path_file,
+            name_file,
             self.__get_time_created(path_file),
             self.__get_time_modified(path_file)
         )
