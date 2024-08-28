@@ -1,12 +1,12 @@
 import unittest
 from settings_project.types_project.type_info_yandex_disk import ResponseStatus
-from settings_project.working_directories.Yandex_cloud_dir import YandexCloudDir
+from settings_project.working_directories.cloud_dir import CloudDir
 
 
 class TestCloudDisk(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.testedCloudDisk = YandexCloudDir()
+        cls.testedCloudDisk = CloudDir()
         cls.HTTP_code_200 = ResponseStatus(200)
 
     def test_get_info_cloud_disk(self):
