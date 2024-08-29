@@ -29,7 +29,7 @@ class LocalDir:
         unix_time = os.path.getmtime(path_file)
         return datetime.fromtimestamp(unix_time)
 
-    def __get_info_file(self, path_file: str) -> InfoFile:
+    def __serializer_info_file(self, path_file: str) -> InfoFile:
         """
         Метод для информации о файле
         :param path_file: путь к файлу (str)
@@ -38,6 +38,7 @@ class LocalDir:
         name_file = os.path.basename(path_file)
         info = InfoFile(
             name_file,
+            path_file,
             self.__get_time_created(path_file),
             self.__get_time_modified(path_file)
         )
