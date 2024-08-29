@@ -1,5 +1,6 @@
 import json
 import requests
+from typing import BinaryIO
 from datetime import datetime
 from pprint import pprint
 from settings_project.types_project.type_info_file import InfoFile
@@ -33,12 +34,12 @@ class CloudDir:
         res = json.loads(response.content)['_embedded']['items']
         return res
 
-    @staticmethod
-    def __serializer_info_file(info_with_dict: dict) -> InfoFile:
+    def __serializer_info_file(self, info_with_dict: dict) -> InfoFile:
         name_file = info_with_dict['name']
+        path_file = self.__cloud_dir + name_file
         created_time = datetime.strptime(info_with_dict['created'], "%Y-%m-%dT%H:%M:%S%z")
         modified_time = datetime.strptime(info_with_dict['modified'], "%Y-%m-%dT%H:%M:%S%z")
-        return InfoFile(name_file=name_file, created_time=created_time, modified_time=modified_time)
+        return InfoFile(name_file, path_file, created_time, modified_time)
 
     def get_info_dir(self) -> list[InfoFile]:
         info_about_files = list()
@@ -47,8 +48,28 @@ class CloudDir:
             info_about_files.append(info_file)
         return info_about_files
 
+    def __get_url_load(self, info_file: InfoFile) -> str:
+        url = self.__base_url_request + f'resources/upload?path=/{self.__cloud_dir}/{info_file.name_file}'
+        request = requests.get(
+            url=url,
+            headers=self.__header,
+        )
+        return request.json()['href']
+
+    def load(self, file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
+        url_upload_file = self.__get_url_load(file_cloud)
+        response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
+        return response.status_code
+
 
 if __name__ == '__main__':
     conf = Config()
     key, cloud_dir = conf.token_API_cloud, conf.cloud_dir
-    pprint(CloudDir(key, cloud_dir).get_info_dir())
+    file_cloud = InfoFile(
+        name_file='Тестовый файл на ноуте.odt',
+        path_file='/home/vladimir/test_local_dir/Тестовый файл на ноуте.odt',
+        created_time=datetime.now(),
+        modified_time=datetime.now()
+    )
+    with open(file_cloud.path_file, 'rb') as file:
+        pprint(CloudDir(key, cloud_dir).load(file_cloud, file))
