@@ -53,7 +53,7 @@ class LocalDir:
         for file in os.listdir(self.__path_local_dir):
             path_file = os.path.join(self.__path_local_dir, file)
             if os.path.isfile(path_file):
-                info_file = self.__get_info_file(path_file)
+                info_file = self.__serializer_info_file(path_file)
                 info_about_files.append(info_file)
         return info_about_files
 
