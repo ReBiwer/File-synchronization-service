@@ -95,7 +95,8 @@ class CloudDir:
         :param info_file_local: информация о локальном файле, загружаемом в облако
         :return int: возвращает статус код запроса на облако
         """
-        url = self.__base_url_request + f'resources?path=/{self.__cloud_dir}/{info_file_local.name_file}'
+        url = self.__base_url_request + (f'resources?path=/{self.__cloud_dir}/{info_file_local.name_file}&'
+                                         f'permanently=true')
         response = requests.delete(url, headers=self.__header)
         return response.status_code
 
