@@ -68,7 +68,7 @@ class CloudDir:
 
     def reload_file(self, info_file_cloud: InfoFile, reloadable_file: BinaryIO) -> tuple[int, int]:
         status_delete = self.delete_file(info_file_cloud)
-        status_load = self.load(info_file_cloud, reloadable_file)
+        status_load = self.load_file(info_file_cloud, reloadable_file)
         return status_delete, status_load
 
 
