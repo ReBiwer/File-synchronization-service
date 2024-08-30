@@ -43,8 +43,8 @@ class CloudDir:
 
     def get_info_dir(self) -> list[InfoFile]:
         info_about_files = list()
-        for file in self.__get_items_in_cloud_dir():
-            info_file = self.__serializer_info_file(file)
+        for info_file in self.__get_items_in_cloud_dir():
+            info_file = self.__serializer_info_file(info_file)
             info_about_files.append(info_file)
         return info_about_files
 
@@ -56,8 +56,8 @@ class CloudDir:
         )
         return request.json()['href']
 
-    def load(self, file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
-        url_upload_file = self.__get_url_load(file_cloud)
+    def load(self, info_file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
+        url_upload_file = self.__get_url_load(info_file_cloud)
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
 
