@@ -66,6 +66,11 @@ class CloudDir:
         response = requests.delete(url, headers=self.__header)
         return response.status_code
 
+    def reload_file(self, info_file_cloud: InfoFile, reloadable_file: BinaryIO) -> tuple[int, int]:
+        status_delete = self.delete_file(info_file_cloud)
+        status_load = self.load(info_file_cloud, reloadable_file)
+        return status_delete, status_load
+
 
 if __name__ == '__main__':
     conf = Config()
@@ -78,6 +83,4 @@ if __name__ == '__main__':
     )
     cloud = CloudDir(key, cloud_dir)
     with open(file_cloud.path_file, 'rb') as file:
-        pprint(cloud.load(file_cloud, file))
-
-    print(cloud.delete_file(file_cloud))
+        pprint(cloud.reload_file(file_cloud, file))
