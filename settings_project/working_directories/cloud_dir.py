@@ -56,7 +56,7 @@ class CloudDir:
         )
         return request.json()['href']
 
-    def load(self, info_file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
+    def load_file(self, info_file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
         url_upload_file = self.__get_url_load(info_file_cloud)
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
