@@ -1,1 +1,1 @@
-from . import cloud_dir, local_disk
+from . import cloud_dir, local_dir

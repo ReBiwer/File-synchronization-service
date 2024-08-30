@@ -1,5 +1,5 @@
 from settings_project.working_directories.cloud_dir import CloudDir
-from settings_project.working_directories.local_disk import LocalDir
+from settings_project.working_directories.local_dir import LocalDir
 
 
 class Synchronizer:
