@@ -65,51 +65,51 @@ class CloudDir:
             info_about_files.append(info_file)
         return info_about_files
 
-    def __get_url_load(self, info_file: InfoFile) -> str:
+    def __get_url_load(self, info_file_local: InfoFile) -> str:
         """
         Метод для получения ссылки на загрузку файла
-        :param info_file: путь к новому файле на диске (не путать с путем к файлу на локальной машине)
+        :param info_file_local: путь к новому файле на диске (не путать с путем к файлу на локальной машине)
         :return str: URL для отправки файла на облако
         """
-        url = self.__base_url_request + f'resources/upload?path=/{self.__cloud_dir}/{info_file.name_file}'
+        url = self.__base_url_request + f'resources/upload?path=/{self.__cloud_dir}/{info_file_local.name_file}'
         request = requests.get(
             url=url,
             headers=self.__header,
         )
         return request.json()['href']
 
-    def load_file(self, info_file_cloud: InfoFile, downloadable_file: BinaryIO) -> int:
+    def load_file(self, info_file_local: InfoFile, downloadable_file: BinaryIO) -> int:
         """
         Метод для загрузки файла
-        :param info_file_cloud: информация о файле в облаке
+        :param info_file_local: информация о локальном файле, загружаемом в облако
         :param downloadable_file: файл, который нужно загрузить в облако в бинарном формате
         :return int: возвращает статус код запроса на облако
         """
-        url_upload_file = self.__get_url_load(info_file_cloud)
+        url_upload_file = self.__get_url_load(info_file_local)
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
 
-    def delete_file(self, info_file_cloud: InfoFile) -> int:
+    def delete_file(self, info_file_local: InfoFile) -> int:
         """
         Метод для удаления файла в облаке
-        :param info_file_cloud: информация о файле в облаке
+        :param info_file_local: информация о локальном файле, загружаемом в облако
         :return int: возвращает статус код запроса на облако
         """
-        url = self.__base_url_request + f'resources?path=/{self.__cloud_dir}/{info_file_cloud.name_file}'
+        url = self.__base_url_request + f'resources?path=/{self.__cloud_dir}/{info_file_local.name_file}'
         response = requests.delete(url, headers=self.__header)
         return response.status_code
 
-    def reload_file(self, info_file_cloud: InfoFile, reloadable_file: BinaryIO) ->  int:
+    def reload_file(self, info_file_local: InfoFile, reloadable_file: BinaryIO) -> int:
         """
         Метод для обновления файла в облаке
         (поскольку в АПИ Яндекса нет отдельного метода для обновления файла,
         пришлось использовать такой способ)
-        :param info_file_cloud: информация о файле в облаке
+        :param info_file_local: информация о локальном файле, загружаемом в облако
         :param reloadable_file: файл, который нужно загрузить в облако в бинарном формате
         :return int: возвращает статус код запроса на облако
         """
-        self.delete_file(info_file_cloud)
-        status_load = self.load_file(info_file_cloud, reloadable_file)
+        self.delete_file(info_file_local)
+        status_load = self.load_file(info_file_local, reloadable_file)
         return status_load
 
 
