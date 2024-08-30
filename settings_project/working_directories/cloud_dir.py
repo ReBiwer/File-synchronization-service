@@ -61,6 +61,11 @@ class CloudDir:
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
 
+    def delete_file(self, info_file_cloud: InfoFile) -> int:
+        url = self.__base_url_request + f'resources?path=/{self.__cloud_dir}/{info_file_cloud.name_file}'
+        response = requests.delete(url, headers=self.__header)
+        return response.status_code
+
 
 if __name__ == '__main__':
     conf = Config()
@@ -71,5 +76,8 @@ if __name__ == '__main__':
         created_time=datetime.now(),
         modified_time=datetime.now()
     )
+    cloud = CloudDir(key, cloud_dir)
     with open(file_cloud.path_file, 'rb') as file:
-        pprint(CloudDir(key, cloud_dir).load(file_cloud, file))
+        pprint(cloud.load(file_cloud, file))
+
+    print(cloud.delete_file(file_cloud))
