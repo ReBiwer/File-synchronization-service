@@ -89,13 +89,13 @@ class CloudDir:
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
 
-    def delete_file(self, info_file_local: InfoFile) -> int:
+    def delete_file(self, cloud_file: InfoFile) -> int:
         """
         Метод для удаления файла в облаке
-        :param info_file_local: информация о локальном файле, загружаемом в облако
+        :param cloud_file: информация о файле в облаке, которое нужно удалить
         :return int: возвращает статус код запроса на облако
         """
-        url = self.__base_url_request + (f'resources?path=/{self.__cloud_dir}/{info_file_local.name_file}&'
+        url = self.__base_url_request + (f'resources?path=/{self.__cloud_dir}/{cloud_file.name_file}&'
                                          f'permanently=true')
         response = requests.delete(url, headers=self.__header)
         return response.status_code
