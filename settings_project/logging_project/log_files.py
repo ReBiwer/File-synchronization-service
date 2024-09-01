@@ -1,4 +1,5 @@
 import logging.config
+import logging
 import os
 from pathlib import Path
 
@@ -14,13 +15,13 @@ def _get_path_to_log() -> str:
     return path_log_file
 
 
-def _get_dict_config() -> dict:
+def _get_dict_config(name_func: str) -> dict:
     dict_config = {
         "version": 1,
         "disable_existing_loggers": True,
         "formatters": {
             "base_format": {
-                "format": f"%(levelname)s | %(asctime)s | %(lineno)s | %(funcName)s | %(message)s",
+                "format": f"{name_func} %(asctime)s %(levelname)s %(message)s",
             },
         },
         "handlers": {
@@ -45,5 +46,19 @@ def _get_dict_config() -> dict:
     return dict_config
 
 
-def config_logger() -> None:
-    logging.config.dictConfig(_get_dict_config())
+def config_logger(name_func: str) -> None:
+    logging.config.dictConfig(_get_dict_config(name_func))
+
+
+def log_func(msg: str):
+    def decorated_func(func):
+
+        def wrapper(*args, **kwargs):
+            logger = logging.getLogger('base_logger')
+            config_logger(func.__name__)
+            logger.debug(msg)
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorated_func
