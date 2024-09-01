@@ -2,6 +2,7 @@ import os
 from settings_project.types_project.type_info_file import InfoFile
 from datetime import datetime
 from settings_project.config.interaction_config import Config
+from settings_project.logging_project.log_files import log_func
 
 
 class LocalDir:
@@ -10,6 +11,7 @@ class LocalDir:
         self.__path_local_dir = path_local_dir
 
     @staticmethod
+    @log_func('Получение времени создания файла')
     def __get_time_created(path_file: str) -> datetime:
         """
         Метод для получения времени создания файла
@@ -20,6 +22,7 @@ class LocalDir:
         return datetime.fromtimestamp(unix_time)
 
     @staticmethod
+    @log_func('Получение времени изменения файла')
     def __get_time_modified(path_file: str) -> datetime:
         """
         Метод для получения времени изменения файла
@@ -29,6 +32,7 @@ class LocalDir:
         unix_time = os.path.getmtime(path_file)
         return datetime.fromtimestamp(unix_time)
 
+    @log_func('Сериализация данных')
     def __serializer_info_file(self, path_file: str) -> InfoFile:
         """
         Метод для информации о файле
@@ -44,6 +48,7 @@ class LocalDir:
         )
         return info
 
+    @log_func('Получение файлов из локальной директории')
     def get_info_dir(self) -> list[InfoFile]:
         """
         Метод для получения информации о файлах в локальной директории
