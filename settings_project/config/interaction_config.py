@@ -1,5 +1,12 @@
 import configparser
 import os
+from settings_project.types_project.exceptions import (
+    NoLocalPath,
+    NoTokenAPI,
+    NoCloudDir,
+    NoTimeSynchronization,
+    NoNameLogFile
+)
 from pathlib import Path
 
 
@@ -34,24 +41,39 @@ class Config:
     @property
     def token_API_cloud(self) -> str:
         """Возвращает токен доступа к облачному сервису"""
-        return self.__config.get('API', 'token_API_cloud')
+        try:
+            return self.__config.get('API', 'token_API_cloud')
+        except configparser.NoOptionError:
+            raise NoTokenAPI('Не указана API токен облачного хранилища')
 
     @property
     def name_log_file(self) -> str:
         """Возвращает название лог файла"""
-        return self.__config.get('logger', 'name_log_file')
+        try:
+            return self.__config.get('logger', 'name_log_file')
+        except configparser.NoOptionError:
+            raise NoNameLogFile('Не указано имя для логфайла')
 
     @property
     def cloud_dir(self) -> str:
         """Возвращает название папки в облаке"""
-        return self.__config.get('dirs', 'name_cloud_dir')
+        try:
+            return self.__config.get('dirs', 'name_cloud_dir')
+        except configparser.NoOptionError:
+            raise NoCloudDir('Не указано имя директории в облаке')
 
     @property
     def local_dir(self) -> str:
         """Возвращает путь к локальной директории"""
-        return self.__config.get('dirs', 'path_local_dir')
+        try:
+            return self.__config.get('dirs', 'path_local_dir')
+        except configparser.NoOptionError:
+            raise NoLocalPath('Не указана локальная директория')
 
     @property
     def time_synchronization(self) -> int:
         """Возвращает периодичность синхронизации"""
-        return int(self.__config.get('time_synchronization', 'time_sec'))
+        try:
+            return int(self.__config.get('time_synchronization', 'time_sec'))
+        except configparser.NoOptionError:
+            raise NoTimeSynchronization('Не указан период синхронизации файлов')
