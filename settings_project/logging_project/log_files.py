@@ -57,7 +57,11 @@ def log_func(msg: str):
             logger = logging.getLogger('base_logger')
             config_logger(func.__name__)
             logger.debug(msg)
-            return func(*args, **kwargs)
+            try:
+                return func(*args, **kwargs)
+            except Exception as exc:
+                logger.error(exc)
+                raise exc
 
         return wrapper
 
