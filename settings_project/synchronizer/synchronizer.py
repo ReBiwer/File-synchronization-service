@@ -11,6 +11,12 @@ class Synchronizer:
 
     @staticmethod
     def __check_file_in_dir(file: InfoFile, files_in_dir: list[InfoFile]) -> bool:
+        """
+        Метод проверяет наличие файла в директории
+        :param file: файл, который нежно проверить
+        :param files_in_dir: директория, где нужно найти файл
+        :return bool:
+        """
         for file_dir in files_in_dir:
             if file_dir.name_file == file.name_file:
                 return True
@@ -18,17 +24,33 @@ class Synchronizer:
 
     @staticmethod
     def __check_change_file(file: InfoFile, files_in_dir: list[InfoFile]) -> bool:
+        """
+        Метод проверят наличие изменений в файле относительно файла в директории
+        :param file: проверяемый файл
+        :param files_in_dir: директория, где идет поиск такого же файла
+        :return bool:
+        """
         for cloud_file in files_in_dir:
             if file.modified_time != cloud_file.modified_time:
                 return True
         return False
 
     def __check_deleting_files_in_cloud(self, local_dir: list[InfoFile], cloud_dir: list[InfoFile]) -> None:
+        """
+        Метод проверяет удалялись ли файлы в локальной директории и удаляет их в облаке
+        :param local_dir: локальная директория, где идет проверка удалений файлов
+        :param cloud_dir: облачная директория, где происходит удаление файлов
+        :return None:
+        """
         for cloud_file in cloud_dir:
             if not self.__check_file_in_dir(cloud_file, local_dir):
                 self.__cloud_dir.delete_file(cloud_file)
 
     def check_files(self) -> None:
+        """
+        Метод проверят все файлы в локальной директории
+        :return:
+        """
         local_dir = self.__local_dir.get_info_dir()
         cloud_dir = self.__cloud_dir.get_info_dir()
         for local_file in local_dir:
@@ -40,7 +62,6 @@ class Synchronizer:
                 with open(local_file.path_file, 'rb') as downloadable_file:
                     self.__cloud_dir.load_file(local_file, downloadable_file)
         self.__check_deleting_files_in_cloud(local_dir, cloud_dir)
-
 
 
 if __name__ == '__main__':
