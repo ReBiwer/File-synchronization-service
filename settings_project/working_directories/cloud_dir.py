@@ -3,6 +3,7 @@ import requests
 from typing import BinaryIO
 from datetime import datetime
 from pprint import pprint
+from settings_project.logging_project.log_files import log_func
 from settings_project.types_project.type_info_file import InfoFile
 from settings_project.config.interaction_config import Config
 
@@ -30,6 +31,7 @@ class CloudDir:
         info_disk = json.loads(response.content)
         return info_disk, status_code
 
+    @log_func("Запрос списка файлов к API")
     def __get_items_in_cloud_dir(self) -> list:
         """
         Метод возвращает список с файлами в облачной папке
@@ -42,6 +44,7 @@ class CloudDir:
         res = json.loads(response.content)['_embedded']['items']
         return res
 
+    @log_func("Сериализация данных")
     def __serializer_info_file(self, info_with_dict: dict) -> InfoFile:
         """
         Метод переводит всю нужную информацию о файле в единую структуру данных
@@ -54,6 +57,7 @@ class CloudDir:
         modified_time = datetime.strptime(info_with_dict['modified'], "%Y-%m-%dT%H:%M:%S%z")
         return InfoFile(name_file, path_file, created_time, modified_time)
 
+    @log_func("Получение информации о файлах в облачной директории")
     def get_info_dir(self) -> list[InfoFile]:
         """
         Метод для сбора информации о файлах в облаке
@@ -65,6 +69,7 @@ class CloudDir:
             info_about_files.append(info_file)
         return info_about_files
 
+    @log_func("Получение ссылки для загрузки файла")
     def __get_url_load(self, info_file_local: InfoFile) -> str:
         """
         Метод для получения ссылки на загрузку файла
@@ -78,6 +83,7 @@ class CloudDir:
         )
         return request.json()['href']
 
+    @log_func("Загрузка файла в облако")
     def load_file(self, info_file_local: InfoFile, downloadable_file: BinaryIO) -> int:
         """
         Метод для загрузки файла
@@ -89,6 +95,7 @@ class CloudDir:
         response = requests.put(url_upload_file, headers=self.__header, data=downloadable_file)
         return response.status_code
 
+    @log_func("Удаление файла в облаке")
     def delete_file(self, cloud_file: InfoFile) -> int:
         """
         Метод для удаления файла в облаке
@@ -100,6 +107,7 @@ class CloudDir:
         response = requests.delete(url, headers=self.__header)
         return response.status_code
 
+    @log_func("Обновление файла в облаке")
     def reload_file(self, info_file_local: InfoFile, reloadable_file: BinaryIO) -> int:
         """
         Метод для обновления файла в облаке
