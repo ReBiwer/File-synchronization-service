@@ -2,6 +2,7 @@ from settings_project.config.interaction_config import Config
 from settings_project.working_directories.cloud_dir import CloudDir
 from settings_project.working_directories.local_dir import LocalDir
 from settings_project.types_project.type_info_file import InfoFile
+from settings_project.logging_project.log_files import log_func
 
 
 class Synchronizer:
@@ -10,6 +11,7 @@ class Synchronizer:
         self.__local_dir = local
 
     @staticmethod
+    @log_func("Проверка наличия файла в директории")
     def __check_file_in_dir(file: InfoFile, files_in_dir: list[InfoFile]) -> bool:
         """
         Метод проверяет наличие файла в директории
@@ -23,6 +25,7 @@ class Synchronizer:
         return False
 
     @staticmethod
+    @log_func("Проверка изменений файлов в директории")
     def __check_change_file(file: InfoFile, files_in_dir: list[InfoFile]) -> bool:
         """
         Метод проверят наличие изменений в файле относительно файла в директории
@@ -35,6 +38,7 @@ class Synchronizer:
                 return True
         return False
 
+    @log_func("Проверка удаленных файлов в директории")
     def __check_deleting_files_in_cloud(self, local_dir: list[InfoFile], cloud_dir: list[InfoFile]) -> None:
         """
         Метод проверяет удалялись ли файлы в локальной директории и удаляет их в облаке
@@ -46,6 +50,7 @@ class Synchronizer:
             if not self.__check_file_in_dir(cloud_file, local_dir):
                 self.__cloud_dir.delete_file(cloud_file)
 
+    @log_func("Проверка файлов в директории")
     def check_files(self) -> None:
         """
         Метод проверят все файлы в локальной директории
