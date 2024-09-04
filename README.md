@@ -53,31 +53,31 @@ python main.py
 ## Пример работы
 
 Содержание main.py:
-![img.png](img.png)
+![img.png](images_for_readme/img.png)
 
 Содержание локальной папки:
 
-![img_1.png](img_1.png)
+![img_1.png](images_for_readme/img_1.png)
 
 Содержание облачной папки после запуска скрипта:
 
-![img_2.png](img_2.png)
+![img_2.png](images_for_readme/img_2.png)
 
 Содержание нового файла в локальной директории:
 
-![img_3.png](img_3.png)
+![img_3.png](images_for_readme/img_3.png)
 
 Облачная директория с запущенной программой:
 
-![img_4.png](img_4.png)
+![img_4.png](images_for_readme/img_4.png)
 
 Облачная директория после сохранения изменений в локальной директории:
 
-![img_5.png](img_5.png)
+![img_5.png](images_for_readme/img_5.png)
 
 Содержание нового файла в облачной директории:
 
-![img_6.png](img_6.png)
+![img_6.png](images_for_readme/img_6.png)
 
 ## Контакты
 Оставьте пользователям контакты и инструкции, как связаться с командой разработки.
